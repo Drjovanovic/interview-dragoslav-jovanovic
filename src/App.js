@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from "react-router-dom";
+
+
+import Navbar from "./components/layout/Navbar";
+import Cards from "./components/layout/Cards";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>  <Switch>
+      <Route>
+      <Navbar />
+    </Route>
+    <Route>
+      <Cards
+        title="Learn React"
+        paragraph="I am a very simple card. I am good at containing small bits of information.
+        I am convenient because I require little markup to use effectively."
+      />
+      </ Route>
+       </Switch>
     </div>
-  );
+  )
 }
 
 export default App;
