@@ -1,6 +1,8 @@
-import React, { Component } from "react";
-
 import M from "materialize-css/dist/js/materialize.min.js";
+import React, { Component } from "react";
+import PostComponent from "./PostComponent";
+import AddTodoCards from "../AddTodoCards";
+
 export class Cards extends Component {
   componentDidMount() {
     document.addEventListener("DOMContentLoaded", function () {
@@ -9,18 +11,29 @@ export class Cards extends Component {
       let instances = M.Modal.init(elems, {});
     });
   }
-
-  render() {
-    function deliteHandler() {
-      console.log(title);
+  state={
+    posts:[
+      { id:1, title:"Zadatak", desc:"Uradi zadatak" ,status:1},
+      
+    ]}
+    addPost = (post) =>{
+      post.id = Math.random();
+      let posts= [...this.state.posts, post]
+      this.setState({
+        posts: posts
+      })
     }
-    const { title } = this.props;
-    const { paragraph } = this.props;
+  render() {
+  
+  
 
     return (
-      
-        <div className="column">
-          <div className="col s12 m6">
+      <div>
+     <PostComponent posts={this.state.posts} />
+      <AddTodoCards  addPost={this.addPost}/>
+      </div>
+       /* <div className="column" >
+          <div className="col s12 m6"key={posts.id}>
             <div className="card blue-grey darken-1">
               <ul id="mobile">
                 <li>
@@ -28,7 +41,7 @@ export class Cards extends Component {
 
                
                
-                  <button data-target="modal2" class="waves-effect waves-light btn-floating transparent modal-trigger" onClick={deliteHandler}>
+                  <button data-target="modal2" class="waves-effect waves-light btn-floating transparent modal-trigger">
                   <i className="material-icons red-text left">delete</i>Delite</button>
    
                 </li>
@@ -53,9 +66,9 @@ export class Cards extends Component {
               </ul>
               <div className="card-content white-text">
                 <span className="card-title center">
-                  <h2>{title}</h2>
+                  <h2>{post.title}</h2>
                 </span>
-                <p>{paragraph}</p>
+                <p>{post.desc}</p>
 
                 <li>
                 <button
@@ -69,8 +82,10 @@ export class Cards extends Component {
               </div>
             </div>
           </div>
-        </div>
+       
       
+        </div>
+       */ 
     );
   }
 }
