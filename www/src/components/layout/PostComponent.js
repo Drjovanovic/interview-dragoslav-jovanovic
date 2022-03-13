@@ -41,7 +41,7 @@ export default class PostComponent extends Component {
               <span className="card-title center">
                 <h3>{post.title}</h3>
               </span>
-              <h4>{post.desc}</h4>
+              <h4>{post.description}</h4>
 
               <li>
               <button

@@ -26,6 +26,11 @@ export class Cards extends Component {
       axios.post('/api/task/add', {title , description, isDone}).then(r => {
         console.log('response from axios add', r)
         
+      }).then(r => {
+        axios.post('/api/tasks', {}).then(r => {
+          console.log('response from axios', r)
+          this.setState({ posts: r.data.tasks})
+        })
       })
     }
   render() { 
