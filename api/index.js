@@ -33,16 +33,25 @@ async function createTask({title, description, isDone}) {
 
 async function getTasks() {
   const tasks = await Task.find()
-    // .find()
-    // .or([{author: 'Mosh'}, {isPublished: true}])
-    // .and([])
-    //.find({ author: /^Mosh/i })
-    //.find({ author: /Hamedani$/i })
-    //.find({ author: /.*Mosh.*/i })
   console.log("odgovor od tasks \n\n\n\n", tasks);
   return tasks;
 }
 
+async function editTask({id, title, description, isDone}) {
+  const task = await Task.findById(id);
+  if (!task) return;
+  task.title = title;
+  task.description = description; 
+  task.isDone = isDone;
+  
+  const result = await task.save();
+  console. log(result);
+}
+
+async function deleteTask(id) {
+  const result = await Task.deleteOne({_id: id});
+  console.log(result);
+}
 
 
 const app = express();
@@ -75,29 +84,24 @@ app.post('/tasks', (req, res) => {
   })
 });
 
-app.post('/task/:id', (req, res) => {
-  // update func
-  // mongo db
-  res.send('task {}')
+app.post('/task/edit', (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const description = req.body.description;
+  const isDone = req.body.isDone;
+  
+  editTask({id, title, description, isDone}).then(r =>{
+    res.send({status: "success", task: r})
+  })
+ 
 });
 
-
-app.post('/task/:id/edit', (req, res) => {
-	// req.params.title
-	// req.params.description
-  // update func
-  // mongo db
-  res.send('task {}')
-});
-
-
-app.post('/task/:id/delete', (req, res) => {
-	// req.params.title
-	// req.params.description
-  // remve func
-  // mongo db
-  res.send('task {}')
-});
+app.post('/task/delete', (req, res) => {
+  const id = req.body.id;
+  deleteTask(id).then(r =>{
+    res.send({status: "success", task: r})
+	})
+})
 
 app.listen(port, () => { 
 	console.log(`Example app listening on port ${port}`)
