@@ -1,10 +1,16 @@
 import M from "materialize-css/dist/js/materialize.min.js";
 import React, { Component } from "react";
+import axios from 'axios';
 import PostComponent from "./PostComponent";
 import AddTodoCards from "../AddTodoCards";
 
 export class Cards extends Component {
   componentDidMount() {
+    axios.post('/api/tasks', {}).then(r => {
+      console.log('response from axios', r)
+      this.setState({ posts: r.data.tasks})
+    })
+
     document.addEventListener("DOMContentLoaded", function () {
       var elemsTooltipped = document.querySelectorAll('.tooltipped');
       let elems = document.querySelectorAll(".modal");

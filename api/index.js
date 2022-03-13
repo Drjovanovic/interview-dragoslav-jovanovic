@@ -18,7 +18,7 @@ const taskSchema = new Schema({
 const Task = mongoose.model("Task", taskSchema);
 
 async function createTask({title, description, isDone}) {
-  const task  = new Task({
+  const task  = new Task({ 
 	  title,
 	  description,
 	  isDone
@@ -39,7 +39,7 @@ async function getTasks() {
     //.find({ author: /^Mosh/i })
     //.find({ author: /Hamedani$/i })
     //.find({ author: /.*Mosh.*/i })
-  console.log(tasks);
+  console.log("odgovor od tasks \n\n\n\n", tasks);
   return tasks;
 }
 
@@ -49,11 +49,11 @@ const app = express();
 const port = 3001;
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-
+  
 app.get('/', (req, res) => {
   res.send('Hi There 123')
-});
-
+}); 
+ 
 app.post('/task/add', (req, res) => {
   // update func
   const title = req.body.title || "";
@@ -70,6 +70,7 @@ app.post('/tasks', (req, res) => {
   const result = {}
   getTasks().then( r =>{
     res.send({ status: "success", tasks: r })    
+
   })
 });
 
