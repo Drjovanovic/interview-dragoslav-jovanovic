@@ -19,17 +19,16 @@ export class Cards extends Component {
   }
   state={
     posts:[
-      { id:1, title:"Zadatak", desc:"Uradi zadatak" ,status:1},
+     // { id:1, title:"Zadatak", desc:"Uradi zadatak" ,status:1},
       
     ]}
-    addPost = (post) =>{
-      post.id = Math.random();
-      let posts= [...this.state.posts, post]
-      this.setState({
-        posts: posts
+    addPost = ({title , description, isDone}) =>{
+      axios.post('/api/task/add', {title , description, isDone}).then(r => {
+        console.log('response from axios add', r)
+        
       })
     }
-  render() {
+  render() { 
   
   
 

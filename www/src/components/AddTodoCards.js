@@ -4,15 +4,17 @@ export default class AddTodoCards extends Component {
   
   state = {
     title: null,
-    desc: null
+    description: null
   }
 handleChange = (e) => {
     this.setState({
         [e.target.id]: e.target.value
     })
+    console.log('changed state', this.state);
 }
 handleSubmit = (e) =>{
     e.preventDefault();
+    console.log('bifore send', this.state);
     this.props.addPost(this.state);
 }
   render() {
@@ -27,8 +29,8 @@ handleSubmit = (e) =>{
       </div>
       <div className="row">
         <div className="input-field col s12">
-          <textarea id="desc" className="materialize-textarea" length="120" onChange={this.handleChange}></textarea>
-          <label htmlFor="desc">Textarea</label>
+          <textarea id="description" className="materialize-textarea" length="120" onChange={this.handleChange}></textarea>
+          <label htmlFor="description">Textarea</label>
           <button className="btn modal-trigger modal-close">Create</button>
         </div>
       </div>

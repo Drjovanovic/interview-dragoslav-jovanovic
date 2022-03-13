@@ -55,11 +55,12 @@ app.get('/', (req, res) => {
 }); 
  
 app.post('/task/add', (req, res) => {
-  // update func
   const title = req.body.title || "";
   const description = req.body.description || "";
   const isDone = req.body.isDone || false;
   
+  console.log('recived params', title, description, isDone);
+  console.log('req', req);
   const result = {}
   createTask({title, description, isDone}).then( r =>{
     res.send({ status: "success", task: r })    
