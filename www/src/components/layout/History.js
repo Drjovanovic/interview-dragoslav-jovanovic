@@ -17,7 +17,7 @@ export class History extends Component {
 
  <div id="modal3" className="modal">
    
-     <Cards />
+     <Cards /> 
    
    
    </div>

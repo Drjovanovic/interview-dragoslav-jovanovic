@@ -59,3 +59,8 @@ const result = await task.save();
 console. log(result);
 return result;
 }
+async function deliteTask(id) {
+  const result = await Task.deleteOne({_id: id});
+  console.log(result);
+  }
+  //removeTask("622cf4cf48af3792eb7276f6");

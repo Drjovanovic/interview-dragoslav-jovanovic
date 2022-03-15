@@ -17,13 +17,11 @@ export class Cards extends Component {
       let instances = M.Modal.init(elems, {});
     });
   }
-  state={
-    posts:[
-     // { id:1, title:"Zadatak", desc:"Uradi zadatak" ,status:1},
-      
-    ]}
-    addPost = ({title , description, isDone}) =>{
-      axios.post('/api/task/add', {title , description, isDone}).then(r => {
+    state={
+     posts:[]
+  }
+    addPost = ({ title , description, isDone}) =>{
+      axios.post('/api/task/add', { title , description, isDone}).then(r => {
         console.log('response from axios add', r)
         
       }).then(r => {
@@ -33,14 +31,33 @@ export class Cards extends Component {
         })
       })
     }
+    deletePost =({id}) =>{
+      axios.post('/api/task/delete', {id}).then(r =>{
+        console.log('response from axios delete', r)
+        console.log("deliteted id is : ", id)
+        
+      }).then(r => {
+        axios.post('/api/tasks', {}).then(r => {
+          console.log('response from axios', r)
+          this.setState({ posts: r.data.tasks})
+        })
+      })
+    }
+  
+  //   handleDelete = (id) =>{
+  //console.log('Event handler called', {id}).then(e =>{
+  ///  return id;
+ // })
+  //  }
+    
   render() { 
   
   
 
     return (
       <div>
-     <PostComponent posts={this.state.posts} />
-      <AddTodoCards  addPost={this.addPost}/>
+      <PostComponent posts={this.state.posts}  onDelete={this.deletePost} /> 
+      <AddTodoCards  addPost={this.addPost} />
       </div>
        /* <div className="column" >
           <div className="col s12 m6"key={posts.id}>

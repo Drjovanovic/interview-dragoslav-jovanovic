@@ -2,16 +2,19 @@ import React, { Component } from "react";
 
 export default class AddTodoCards extends Component {
   
-  state = {
-    title: null,
-    description: null
-  }
+ // state = {
+  //  title: null,
+  //  description: null,
+    
+  
+ // }
+  
 handleChange = (e) => {
     this.setState({
         [e.target.id]: e.target.value
     })
     console.log('changed state', this.state);
-}
+} 
 handleSubmit = (e) =>{
     e.preventDefault();
     console.log('bifore send', this.state);
