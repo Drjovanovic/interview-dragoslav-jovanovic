@@ -35,7 +35,7 @@ async function getTasks() {
   const tasks = await Task.find()
   console.log("odgovor od tasks \n\n\n\n", tasks);
   return tasks;
-}
+} 
 
 async function editTask({id, title, description, isDone}) {
   const task = await Task.findById(id);
@@ -85,16 +85,16 @@ app.post('/tasks', (req, res) => {
 });
 
 app.post('/task/edit', (req, res) => {
-  const id = req.body.id;
+  const id = req.body.id
   const title = req.body.title;
   const description = req.body.description;
   const isDone = req.body.isDone;
   
-  editTask({id, title, description, isDone}).then(r =>{
+  editTask({_id, title, description, isDone}).then(r =>{
     res.send({status: "success", task: r})
   })
  
-});
+});  
 
 app.post('/task/delete', (req, res) => {
   const id = req.body.id;

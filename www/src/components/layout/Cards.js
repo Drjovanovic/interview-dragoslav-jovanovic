@@ -1,65 +1,89 @@
-import M from "materialize-css/dist/js/materialize.min.js";
+// import M from "materialize-css/dist/js/materialize.min.js";
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import PostComponent from "./PostComponent";
 import AddTodoCards from "../AddTodoCards";
 
 export class Cards extends Component {
   componentDidMount() {
-    axios.post('/api/tasks', {}).then(r => {
-      console.log('response from axios', r)
-      this.setState({ posts: r.data.tasks})
-    })
-
-    document.addEventListener("DOMContentLoaded", function () {
-      var elemsTooltipped = document.querySelectorAll('.tooltipped');
-      let elems = document.querySelectorAll(".modal");
-      let instances = M.Modal.init(elems, {});
+    axios.post("/api/tasks", {}).then((r) => {
+      console.log("response from axios", r);
+      this.setState({ tasks: r.data.tasks });
     });
-  }
-    state={
-     posts:[]
-  }
-    addPost = ({ title , description, isDone}) =>{
-      axios.post('/api/task/add', { title , description, isDone}).then(r => {
-        console.log('response from axios add', r)
-        
-      }).then(r => {
-        axios.post('/api/tasks', {}).then(r => {
-          console.log('response from axios', r)
-          this.setState({ posts: r.data.tasks})
-        })
-      })
-    }
-    deletePost =({id}) =>{
-      axios.post('/api/task/delete', {id}).then(r =>{
-        console.log('response from axios delete', r)
-        console.log("deliteted id is : ", id)
-        
-      }).then(r => {
-        axios.post('/api/tasks', {}).then(r => {
-          console.log('response from axios', r)
-          this.setState({ posts: r.data.tasks})
-        })
-      })
-    }
-  
-  //   handleDelete = (id) =>{
-  //console.log('Event handler called', {id}).then(e =>{
-  ///  return id;
- // })
-  //  }
-    
-  render() { 
-  
-  
 
+    // document.addEventListener("DOMContentLoaded", function () {
+    //   var elemsTooltipped = document.querySelectorAll(".tooltipped");
+    //   let elems = document.querySelectorAll(".modal");
+    //   let instances = M.Modal.init(elems, {});
+    // });
+  }
+  state = {
+    tasks: [{ id: 1, title: "", description: "", status: 1 }],
+  };
+
+  addTasks = ({ title, description, isDone }) => {
+    axios
+      .post("/api/task/add", { title, description, isDone })
+      .then((r) => {
+        console.log("response from axios add", r);
+      })
+      .then((r) => {
+        axios.post("/api/tasks", {}).then((r) => {
+          console.log("response from axios", r);
+          this.setState({ tasks: r.data.tasks });
+        });
+      });
+  };
+
+  editTask = ({ _id, title, description, isDone }) => {
+    axios
+      .post("/api/task/edit", { _id, title, description, isDone })
+      .then((r) => {
+        console.log("response from axios edit", r);
+        console.log("Edit id is : ", this);
+      })
+      .then((r) => {
+        axios.post("/api/tasks", {}).then((r) => {
+          console.log("response from axios", r);
+          this.setState({ tasks: r.data.tasks });
+        });
+      });
+  };
+
+  deleteTask = ({ id }) => {
+    
+    axios
+      .post("/api/task/delete", { id })
+      .then((r) => {
+        console.log("response from axios delete", r);
+        console.log("deliteted id is : ", id);
+      })
+      .then((r) => {
+        axios.post("/api/tasks", {}).then((r) => {
+          console.log("response from axios", r);
+          this.setState({ task: r.data.task });
+        })
+      })
+      .then((r) => {
+        axios.post("/api/tasks", {}).then((r) => {
+          console.log("response from axios", r);
+          this.setState({ tasks: r.data.tasks });
+        })
+      });
+  };
+
+  render() {
     return (
       <div>
-      <PostComponent posts={this.state.posts}  onDelete={this.deletePost} /> 
-      <AddTodoCards  addPost={this.addPost} />
+        <PostComponent
+          tasks={this.state.tasks}
+          onDelete={this.deleteTask}
+          onEdit={this.editTask}
+        />
+
+        <AddTodoCards addTask={this.addTasks} />
       </div>
-       /* <div className="column" >
+      /* <div className="column" >
           <div className="col s12 m6"key={posts.id}>
             <div className="card blue-grey darken-1">
               <ul id="mobile">
@@ -112,7 +136,7 @@ export class Cards extends Component {
        
       
         </div>
-       */ 
+       */
     );
   }
 }

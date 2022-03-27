@@ -1,22 +1,23 @@
 import { Route, Switch } from "react-router-dom";
+import React from "react";
 import History from "./components/layout/History";
 import Navbar from "./components/layout/Navbar";
 import Cards from "./components/layout/Cards";
-import AddTodoCards from "./components/AddTodoCards";
-import PostComponent from "./components/layout/PostComponent";
-import CardComponent from "./components/layout/CardComponent";
+import EditCards from "./components/layout/EditCards";
 function App() {
+  
   return (
     <div>
-     <Navbar />
-      <Switch>
-        <Route path="/">
-          <Cards />
-    
-          <History />
-        </Route>
-      </Switch>
+      <Navbar />
       
+      <div >
+        <Switch >
+          <Route  path="/edit/:_id" component={EditCards} />
+          <Route path="/history" component={History} />
+
+          <Route path="/" component={Cards}  />
+        </Switch>
+      </div>
     </div>
   );
 }
