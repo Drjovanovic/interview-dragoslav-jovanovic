@@ -90,7 +90,7 @@ app.post('/task/edit', (req, res) => {
   const description = req.body.description;
   const isDone = req.body.isDone;
   
-  editTask({_id, title, description, isDone}).then(r =>{
+  editTask({id, title, description, isDone}).then(r =>{
     res.send({status: "success", task: r})
   })
  
