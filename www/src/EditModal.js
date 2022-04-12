@@ -1,23 +1,21 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import "./EditModal.css";
 
 const EditModal = (props) => {
   let [title, setTitle] = useState(props.task.title);
-  let [description, setDescription] =useState(props.task.description);
+  let [description, setDescription] = useState(props.task.description);
   const [id] = useState(props.task._id);
-  const isDone = useState(props.task.isDone);
- 
 
   const handleEdit = (e) => {
-    let setState={
-      _id: id,
+    let setEditState = {
+      id,
       title,
       description,
-      isDone
-    }
+      isDone: props.task.isDone,
+    };
     e.preventDefault();
-    console.log("bifore send", setState);
-    props.editTask(setState);
+    console.log("bifore send", setEditState);
+    props.editTask(setEditState);
   };
   return (
     <div className="editModal">

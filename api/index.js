@@ -37,14 +37,17 @@ async function getTasks() {
 }
 
 async function editTask({ id, title, description, isDone }) {
-  const task = await Task.findById( id );
+  
+  const task = await Task.findById(id);
+  
   if (!task) return;
-  task.title = title;
-  task.description = description;
-  task.isDone = isDone;
-
+  // task.title = title;
+  // task.description = description;
+  // task.isDone = isDone;
+task.set({title,description,isDone})
+console.log("ovoj je muka",title, description, isDone);
   const result = await task.save();
-  console.log(result);
+  console.log("rezultatiiiii",result);
 }
 
 async function isDoneTask({ id, isDone }) {
@@ -58,7 +61,7 @@ async function isDoneTask({ id, isDone }) {
 
 async function deleteTask(id) {
   const result = await Task.deleteOne({ _id: id });
-  console.log(result);
+  console.log("ovoj je rezultat", result);
 }
 
 const app = express();
@@ -91,11 +94,11 @@ app.post("/tasks", (req, res) => {
 });
 
 app.post("/task/edit", (req, res) => {
-  const id = req.body._id;
+  const id = req.body.id;
   const title = req.body.title;
   const description = req.body.description;
   const isDone = req.body.isDone;
-
+  console.log("recived params Edit", title, description, isDone);
   editTask({ id, title, description, isDone }).then((r) => {
     res.send({ status: "success", task: r });
   });

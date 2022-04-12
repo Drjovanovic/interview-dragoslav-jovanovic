@@ -60,7 +60,23 @@ export default class TaskDiler extends Component {
 
   editTask = ({ id, title, description, isDone }) => {
     axios
+
       .post("/api/task/edit", { id, title, description, isDone })
+      
+      .then((r) => {
+        console.log("response from axios edit", r);
+        console.log("params", id, title, description, isDone);
+      })
+      .then((r) => {
+        axios.post("/api/tasks", {}).then((r) => {
+          console.log("response from axios", r);
+          this.setState({ tasks: r.data.tasks });
+        });
+      });
+  };
+  isDoneTask = ({ id, isDone }) => {
+    axios
+      .post("/api/task/isdone", { id, isDone })
       .then((r) => {
         console.log("response from axios edit", r);
       })
@@ -69,14 +85,6 @@ export default class TaskDiler extends Component {
           console.log("response from axios", r);
           this.setState({ tasks: r.data.tasks });
         });
-      });
-      
-  };
-  isDoneTask = ({ id, isDone }) => {
-    axios
-      .post("/api/task/isdone", { id, isDone })
-      .then((r) => {
-        console.log("response from axios edit", r);
       })
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
@@ -96,13 +104,7 @@ export default class TaskDiler extends Component {
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
           console.log("response from axios", r);
-          this.setState({ task: r.data.task });
-        });
-      })
-      .then((r) => {
-        axios.post("/api/tasks", {}).then((r) => {
-          console.log("response from axios", r);
-          this.setState({ tasks: r.data.tasks });
+          this.setState({ task: r.data.tasks });
         });
       });
   };
