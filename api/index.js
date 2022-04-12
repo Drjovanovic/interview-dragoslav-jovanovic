@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require("express");
 const mongoose = require("mongoose");
 const mongoDB = "mongodb://root:example@mongo";
 
@@ -17,92 +17,106 @@ const taskSchema = new Schema({
 
 const Task = mongoose.model("Task", taskSchema);
 
-async function createTask({title, description, isDone}) {
-  const task  = new Task({ 
-	  title,
-	  description,
-	  isDone
+async function createTask({ title, description, isDone }) {
+  const task = new Task({
+    title,
+    description,
+    isDone,
   });
-  
+
   const result = await task.save();
   console.log(result);
   return result;
-  res.send(result)
+  res.send(result);
 }
-
 
 async function getTasks() {
-  const tasks = await Task.find()
+  const tasks = await Task.find();
   console.log("odgovor od tasks \n\n\n\n", tasks);
   return tasks;
-} 
-
-async function editTask({id, title, description, isDone}) {
-  const task = await Task.findById(id);
-  if (!task) return;
-  task.title = title;
-  task.description = description; 
-  task.isDone = isDone;
-  
-  const result = await task.save();
-  console. log(result);
 }
 
-async function deleteTask(id) {
-  const result = await Task.deleteOne({_id: id});
+async function editTask({ id, title, description, isDone }) {
+  const task = await Task.findById( id );
+  if (!task) return;
+  task.title = title;
+  task.description = description;
+  task.isDone = isDone;
+
+  const result = await task.save();
   console.log(result);
 }
 
+async function isDoneTask({ id, isDone }) {
+  const task = await Task.findById({ id });
+  if (!task) return;
+  task.isDone = isDone;
+
+  const result = await task.save();
+  console.log(result);
+}
+
+async function deleteTask(id) {
+  const result = await Task.deleteOne({ _id: id });
+  console.log(result);
+}
 
 const app = express();
 const port = 3001;
-app.use(express.json())
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-  
-app.get('/', (req, res) => {
-  res.send('Hi There 123')
-}); 
- 
-app.post('/task/add', (req, res) => {
+
+app.get("/", (req, res) => {
+  res.send("Hi There 123");
+});
+
+app.post("/task/add", (req, res) => {
   const title = req.body.title || "";
   const description = req.body.description || "";
   const isDone = req.body.isDone || false;
-  
-  console.log('recived params', title, description, isDone);
-  console.log('req', req);
-  const result = {}
-  createTask({title, description, isDone}).then( r =>{
-    res.send({ status: "success", task: r })    
-  })
+
+  console.log("recived params", title, description, isDone);
+  console.log("req", req);
+  const result = {};
+  createTask({ title, description, isDone }).then((r) => {
+    res.send({ status: "success", task: r });
+  });
 });
 
-app.post('/tasks', (req, res) => {
-  const result = {}
-  getTasks().then( r =>{
-    res.send({ status: "success", tasks: r })    
-
-  })
+app.post("/tasks", (req, res) => {
+  const result = {};
+  getTasks().then((r) => {
+    res.send({ status: "success", tasks: r });
+  });
 });
 
-app.post('/task/edit', (req, res) => {
-  const id = req.body.id
+app.post("/task/edit", (req, res) => {
+  const id = req.body._id;
   const title = req.body.title;
   const description = req.body.description;
   const isDone = req.body.isDone;
-  
-  editTask({id, title, description, isDone}).then(r =>{
-    res.send({status: "success", task: r})
-  })
- 
-});  
 
-app.post('/task/delete', (req, res) => {
+  editTask({ id, title, description, isDone }).then((r) => {
+    res.send({ status: "success", task: r });
+  });
+});
+
+app.post("/task/isdone", (req, res) => {
+  const id = req.body._id;
+  const isDone = req.body.isDone;
+
+  isDoneTask({ id, isDone }).then((r) => {
+    res.send({ status: "success", task: r });
+  });
+});
+
+app.post("/task/delete", (req, res) => {
   const id = req.body.id;
-  deleteTask(id).then(r =>{
-    res.send({status: "success", task: r})
-	})
-})
+  deleteTask(id).then((r) => {
+    res.send({ status: "success", task: r });
+  });
+});
 
-app.listen(port, () => { 
-	console.log(`Example app listening on port ${port}`)
-})
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`);
+});

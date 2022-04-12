@@ -1,21 +1,30 @@
-import { useState } from "react";
+import React,{ useState } from "react";
 import "./EditModal.css";
 
-
 const EditModal = (props) => {
-  const [title, setTitle] = useState(props.task.title);
-  const [description, setDescription] = useState(props.task.description);
- let handleEdit = (e) => {
+  let [title, setTitle] = useState(props.task.title);
+  let [description, setDescription] =useState(props.task.description);
+  const [id] = useState(props.task._id);
+  const isDone = useState(props.task.isDone);
+ 
+
+  const handleEdit = (e) => {
+    let setState={
+      _id: id,
+      title,
+      description,
+      isDone
+    }
     e.preventDefault();
-    console.log("bifore send", props.state);
-    props.editTask(props.state);
+    console.log("bifore send", setState);
+    props.editTask(setState);
   };
   return (
     <div className="editModal">
       Modal text
       <form className="col s12">
         <div className="input-field col s12">
-          {/* <div>{props.task._id}</div> */}
+          <div>{id}</div>
           <input value={title} onChange={(e) => setTitle(e.target.value)} />
           <input
             value={description}
@@ -23,26 +32,15 @@ const EditModal = (props) => {
           />
         </div>
         <div className="modal-footer">
-          <button
-            className="waves-red btn-flat right"
-            onClick={() => {
-              console.log("radiii nesto", props.task._id);
-
-               handleEdit(props.task._id
-                 
-              //    title: props.task.title._id,
-              //   description: props.task.description._id,
-              // //   //isDone: task.isDone,
-               );
-            }}
-          >
+          <button className="waves-green btn-flat right" onClick={handleEdit}>
             Edit
           </button>
+
           <button
             className="waves-red btn-flat left"
             onClick={() => props.setShowModalEdit(!props.showModalEdit)}
           >
-            Chancel
+            Cancel
           </button>
         </div>
       </form>

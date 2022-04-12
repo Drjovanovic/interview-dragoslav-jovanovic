@@ -28,8 +28,7 @@ export default class TaskDiler extends Component {
     ],
   };
 
-
- componentDidMount() {
+  componentDidMount() {
     axios.post("/api/tasks", {}).then((r) => {
       // console.log("response from axios", r);
       this.setState({ tasks: r.data.tasks });
@@ -64,7 +63,20 @@ export default class TaskDiler extends Component {
       .post("/api/task/edit", { id, title, description, isDone })
       .then((r) => {
         console.log("response from axios edit", r);
-        console.log("Edit id is : ", id);
+      })
+      .then((r) => {
+        axios.post("/api/tasks", {}).then((r) => {
+          console.log("response from axios", r);
+          this.setState({ tasks: r.data.tasks });
+        });
+      });
+      
+  };
+  isDoneTask = ({ id, isDone }) => {
+    axios
+      .post("/api/task/isdone", { id, isDone })
+      .then((r) => {
+        console.log("response from axios edit", r);
       })
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
@@ -75,7 +87,6 @@ export default class TaskDiler extends Component {
   };
 
   deleteTask = ({ id }) => {
-    
     axios
       .post("/api/task/delete", { id })
       .then((r) => {
@@ -86,28 +97,15 @@ export default class TaskDiler extends Component {
         axios.post("/api/tasks", {}).then((r) => {
           console.log("response from axios", r);
           this.setState({ task: r.data.task });
-        })
+        });
       })
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
           console.log("response from axios", r);
           this.setState({ tasks: r.data.tasks });
-        })
+        });
       });
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   // addTask = (task) => {
   //   console.log("ovo je odgovor od Add", task);
@@ -119,8 +117,8 @@ export default class TaskDiler extends Component {
   // };
   // handleEdit = (e) => {
   //  e.preventDefault();
-  //   console.log("bifore send Edit",e.task);
-  
+  //   console.log("bifore send Edit",e);
+  //   this.editTask(this.title, this.description, this.id);
   // };
 
   // handleDelete = (task) => {
@@ -136,6 +134,7 @@ export default class TaskDiler extends Component {
           tasks={this.state.tasks}
           deleteTask={this.deleteTask}
           editTask={this.editTask}
+          isDoneTask={this.isDoneTask}
         />
       </div>
     );
