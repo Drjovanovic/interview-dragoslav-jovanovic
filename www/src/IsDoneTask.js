@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 const IsDoneTask = (props) => {
-  const [showDone, setIsDone] = useState(props.task);
-
+  const [showDone, setIsDone] = useState(props.isDone);
+console.log(showDone);
   return (
     <div className="row">
       {(showDone && (

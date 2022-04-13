@@ -24,7 +24,7 @@ export default class CardsMap extends Component {
   render() {
     return (
       <div>
-        {this.props.tasks.length === 0 && "Please create a new TODO trask"}
+        {this.props.tasks.length === 0 && "Please create a new TODO task"}
         {this.renderTags()}
       </div>
     );

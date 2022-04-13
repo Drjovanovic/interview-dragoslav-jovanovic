@@ -7,21 +7,20 @@ import IsDoneTask from "./IsDoneTask";
 const Card = (props) => {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
-  const [isDone, setIsDone] = useState(props.task.isDone);
-
+  const [isDone] = useState(props.task.isDone);
+  const [id] = useState(props.task._id);
+   
   const handleIsDone = (e) => {
-    e.preventDefault();
-    console.log(
-      "ovo je odgovor od isDone: ",
-      props.task._id,
-      props.task.isDone,
-      setIsDone
-    );
-    const setIsDone={
-      id:props.task._id,
-      isDone
-    }
-     props.isDoneTask(setIsDone());
+      //  e.preventDefault();
+    //  let onDon={isDone:setIsDone  && !isDone} 
+      let don={
+       id,
+      isDone: !isDone
+     }
+   
+    console.log("ovo je odgovor od isDone: ", don);
+    
+       props.isDoneTask(don);
   };
   return (
     <div>

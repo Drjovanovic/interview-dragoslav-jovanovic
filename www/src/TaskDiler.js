@@ -79,6 +79,7 @@ export default class TaskDiler extends Component {
       .post("/api/task/isdone", { id, isDone })
       .then((r) => {
         console.log("response from axios edit", r);
+        console.log("params", id, isDone);
       })
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {

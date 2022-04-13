@@ -37,24 +37,23 @@ async function getTasks() {
 }
 
 async function editTask({ id, title, description, isDone }) {
-  
   const task = await Task.findById(id);
-  
+
   if (!task) return;
   // task.title = title;
   // task.description = description;
   // task.isDone = isDone;
-task.set({title,description,isDone})
-console.log("ovoj je muka",title, description, isDone);
+  task.set({ title, description, isDone });
+  console.log("ovoj je muka", title, description, isDone);
   const result = await task.save();
-  console.log("rezultatiiiii",result);
+  console.log("rezultatiiiii", result);
 }
 
 async function isDoneTask({ id, isDone }) {
-  const task = await Task.findById({ id });
+  const task = await Task.findById(id);
   if (!task) return;
-  task.isDone = isDone;
-
+  // task.isDone = isDone;
+  task.set({ isDone });
   const result = await task.save();
   console.log(result);
 }
@@ -105,7 +104,7 @@ app.post("/task/edit", (req, res) => {
 });
 
 app.post("/task/isdone", (req, res) => {
-  const id = req.body._id;
+  const id = req.body.id;
   const isDone = req.body.isDone;
 
   isDoneTask({ id, isDone }).then((r) => {
