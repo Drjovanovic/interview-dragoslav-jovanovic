@@ -9,22 +9,11 @@ export default class TaskDiler extends Component {
     tasks: [
       // {
       //   _id: 1,
-      //   title: "Tako treba",
-      //   description: "Jertako smo u mogucnosti",
+      //   title: "",
+      //   description: "",
       //   isDone: false,
       // },
-      // {
-      //   _id: 2,
-      //   title: "Tako tako tako",
-      //   description: "Jertako smo u mogucnosti",
-      //   isDone: false,
-      // },
-      // {
-      //   _id: 3,
-      //   title: "Tako je bolje",
-      //   description: "Jertako smo u mogucnosti",
-      //   isDone: false,
-      // },
+   
     ],
   };
 
@@ -33,16 +22,7 @@ export default class TaskDiler extends Component {
       // console.log("response from axios", r);
       this.setState({ tasks: r.data.tasks });
     });
-
-    // document.addEventListener("DOMContentLoaded", function () {
-    //   var elemsTooltipped = document.querySelectorAll(".tooltipped");
-    //   let elems = document.querySelectorAll(".modal");
-    //   let instances = M.Modal.init(elems, {});
-    // });
   }
-  // state = {
-  //   tasks: [{}],
-  // };
 
   addTasks = ({ title, description, isDone }) => {
     axios
@@ -62,7 +42,7 @@ export default class TaskDiler extends Component {
     axios
 
       .post("/api/task/edit", { id, title, description, isDone })
-      
+
       .then((r) => {
         console.log("response from axios edit", r);
         console.log("params", id, title, description, isDone);
@@ -80,12 +60,6 @@ export default class TaskDiler extends Component {
       .then((r) => {
         console.log("response from axios edit", r);
         console.log("params", id, isDone);
-      })
-      .then((r) => {
-        axios.post("/api/tasks", {}).then((r) => {
-          console.log("response from axios", r);
-          this.setState({ tasks: r.data.tasks });
-        });
       })
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
@@ -110,25 +84,6 @@ export default class TaskDiler extends Component {
       });
   };
 
-  // addTask = (task) => {
-  //   console.log("ovo je odgovor od Add", task);
-  //   task._id = Math.random();
-  //   let tasks = [...this.state.tasks, task];
-  //   this.setState({
-  //     tasks: tasks,
-  //   });
-  // };
-  // handleEdit = (e) => {
-  //  e.preventDefault();
-  //   console.log("bifore send Edit",e);
-  //   this.editTask(this.title, this.description, this.id);
-  // };
-
-  // handleDelete = (task) => {
-  //   const tasks = this.state.tasks.filter((t) => t._id !== task);
-  //   this.setState({ tasks });
-  //   console.log("Event handler Called", task);
-  // };
   render() {
     return (
       <div>
