@@ -3,10 +3,14 @@ import M from "materialize-css/dist/js/materialize.min.js";
 
 export default class AddTask extends Component {
   componentDidMount() {
-    document.addEventListener("DOMContentLoaded", function () {
-      let elems = document.querySelectorAll(".modal");
-      let instances = M.Modal.init(elems, {});
-    });
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+        let elems = document.querySelectorAll(".modal");
+        let instances = M.Modal.init(elems, {});
+      },
+      { passive: true }
+    );
   }
 
   state = {
@@ -16,6 +20,7 @@ export default class AddTask extends Component {
 
   handleClose = (e) => {
     e.preventDefault();
+    this.setState({ title: "", description: "" });
   };
 
   handleChange = (e) => {
@@ -51,14 +56,14 @@ export default class AddTask extends Component {
             </div>
             <div className="row">
               <div className="input-field col s12">
-                <textarea
+                <input
                   value={this.state.description}
                   id="description"
-                  className="materialize-textarea"
+                  type="text"
                   length="12"
                   onChange={this.handleChange}
-                ></textarea>
-                <label htmlFor="description">Textarea</label>
+                ></input>
+                <label htmlFor="input_text">Textarea</label>
               </div>
             </div>
             <button

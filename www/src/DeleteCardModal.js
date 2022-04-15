@@ -15,8 +15,8 @@ function onConfirmDelete(){props.setShowModalDelete(!props.showModalDelete)}
       
         <div className=" col s12 ">
           <h4>Are You Sure ?</h4>
-          <p>This action will delete Todo</p>
-        </div>
+          <p className="center">This action will delete Todo</p>
+        
         <div className="modal-footer" >
           <ul >
             <li className="left">
@@ -37,7 +37,7 @@ function onConfirmDelete(){props.setShowModalDelete(!props.showModalDelete)}
             </li>
           </ul>
         </div>
-      
+      </div>
       </div>
     </div>
   );

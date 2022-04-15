@@ -21,7 +21,7 @@ const EditModal = (props) => {
       isDone: props.task.isDone,
     };
     e.preventDefault();
-    console.log("bifore send", editState);
+   
     if (props.task.title === title && props.task.description === description) {
       return;
     }
@@ -44,8 +44,9 @@ const EditModal = (props) => {
             className="waves-green btn-flat right"
             onClick={handleEdit}
             disabled={
-              props.task.title === title &&
-              props.task.description === description
+              (props.task.title === title &&
+                props.task.description === description) ||
+              (title === "" && description === "")
             }
           >
             Edit

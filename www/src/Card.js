@@ -49,17 +49,18 @@ const Card = (props) => {
             <div className="card-content white-text">
               <div>
                 {!props.task.isDone && (
-                  <span className={"right green-text"} onClick={handleIsDone}>
+                  <div className="btnNotDon">
+                  <span className="right green-text" onClick={handleIsDone}>
+                    <IsDoneTask isDone={props.task.isDone} />
+                  </span>
+                  </div>
+                )}
+                {props.task.isDone && (
+                  <span className="btnDonStyle" onClick={handleIsDone}>
                     <IsDoneTask isDone={props.task.isDone} />
                   </span>
                 )}
-
                 <div className="card-title center">
-                  {props.task.isDone && (
-                    <span className="btnDonStyle" onClick={handleIsDone}>
-                      <IsDoneTask isDone={props.task.isDone} />
-                    </span>
-                  )}
                   <h4>{props.task.title}</h4>
                   <h5>{props.task.description}</h5>
                 </div>
@@ -68,7 +69,7 @@ const Card = (props) => {
             <div className="card-action">
               <div className="row">
                 <ul>
-                  <li className="left">
+                  <li className="btnEditStyle">
                     <button
                       className={
                         (!props.task.isDone &&
@@ -81,12 +82,14 @@ const Card = (props) => {
                     </button>
                   </li>
                   <li className="btnDelStyle">
-                    <i
-                      onClick={() => setShowModalDelete(!showModalDelete)}
-                      className=" material-icons flat medium red-text darken-3"
-                    >
-                      delete
-                    </i>
+                    <button className="btn-flat transparent">
+                      <i
+                        onClick={() => setShowModalDelete(!showModalDelete)}
+                        className=" material-icons flat medium red-text darken-3"
+                      >
+                        <h2>delete</h2>
+                      </i>
+                    </button>
                   </li>
                 </ul>
               </div>

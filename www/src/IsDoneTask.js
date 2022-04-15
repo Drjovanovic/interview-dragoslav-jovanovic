@@ -4,14 +4,19 @@ const IsDoneTask = (props) => {
   const [showDone, setIsDone] = useState(props.isDone);
 
   return (
-    <div className="row">
+    <div>
       {(showDone && (
-        <i
-          className="material-icons large  green-text"
-          onClick={() => setIsDone(!showDone)}
-        >
-          done
-        </i>
+        <span className="row right">
+          <button className="btn-flat transparent right">
+            <h1 className="green-text large left">Done  <i
+              className="material-icons large  green-text "
+              onClick={() => setIsDone(!showDone)}
+            >
+              <h1>done</h1>
+            </i></h1>
+          
+          </button>
+        </span>
       )) || (
         <button
           className="btn waves-effect"

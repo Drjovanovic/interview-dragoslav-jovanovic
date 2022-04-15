@@ -11,14 +11,13 @@ export default class TaskDealer extends Component {
 
   componentDidMount() {
     axios.post("/api/tasks", {}).then((r) => {
-      console.log("response from axios", r);
+     
       this.setState({ tasks: r.data.tasks });
     });
   }
 
   addTasks = ({ title, description, isDone }) => {
     axios.post("/api/task/add", { title, description, isDone }).then((r) => {
-      console.log("response from axios add", r);
       this.setState({ tasks: [r.data.task, ...this.state.tasks] });
     });
   };
@@ -29,12 +28,7 @@ export default class TaskDealer extends Component {
       .post("/api/task/edit", { id, title, description, isDone })
 
       .then((r) => {
-        console.log("response from axios edit", r);
-        console.log("params", id, title, description, isDone);
-      })
-      .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
-          console.log("response from axios", r);
           this.setState({ tasks: r.data.tasks });
         });
       });
@@ -42,13 +36,9 @@ export default class TaskDealer extends Component {
   isDoneTask = ({ id, isDone }) => {
     axios
       .post("/api/task/isdone", { id, isDone })
-      .then((r) => {
-        console.log("response from axios edit", r);
-        console.log("params", id, isDone);
-      })
+
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
-          console.log("response from axios", r);
           this.setState({ tasks: r.data.tasks });
         });
       });
@@ -57,13 +47,9 @@ export default class TaskDealer extends Component {
   deleteTask = ({ id }) => {
     axios
       .post("/api/task/delete", { id })
-      .then((r) => {
-        console.log("response from axios delete", r);
-        console.log("deliteted id is : ", id);
-      })
+
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
-          console.log("response from axios Delete: ", r);
           this.setState({ tasks: r.data.tasks });
         });
       });

@@ -1,13 +1,29 @@
 .btnDonStyle {
   position: absolute;
-  right: 37%;
+  justify-content: center;
+  align-items: center;
+  left: 42%;
+  right: auto;
   display: flex;
   flex-direction: row;
+  z-index: 50;
+  padding: 0;
+  top: 2%;
+}
+.btnNotDon{
+  position: absolute;
   z-index: 10;
-  padding: 3rem;
+  right: 1%;
 }
 .btnDelStyle {
   position: absolute;
   z-index: 10;
-  right: 1%;
+  right: 0%;
+  top: -70%;
+}
+.btnEditStyle {
+  position: absolute;
+  z-index: 10;
+  left: 1%;
+  top: 15%;
 }
