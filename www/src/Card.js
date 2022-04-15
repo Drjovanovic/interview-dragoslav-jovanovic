@@ -3,24 +3,19 @@ import EditModal from "./EditModal";
 import DeleteCardModal from "./DeleteCardModal";
 import BackdropModal from "./BackdropModal";
 import IsDoneTask from "./IsDoneTask";
+import "./Card.css";
 
 const Card = (props) => {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
-  const [isDone] = useState(props.task.isDone);
-  const [id] = useState(props.task._id);
-  console.log("In card isDone have value: ", props.task.isDone);
 
   const handleIsDone = (e) => {
     e.preventDefault();
 
     let don = {
-      id,
+      id: props.task._id,
       isDone: !props.task.isDone,
     };
-
-    console.log("ovo je odgovor od isDone: ", don);
-
     props.isDoneTask(don);
   };
   return (
@@ -47,28 +42,25 @@ const Card = (props) => {
         <div className="col s12 m6">
           <div
             className={
-              (props.task.isDone === false && "card blue-grey darken-1") ||
+              (!props.task.isDone && "card blue-grey darken-1") ||
               " card  #eceff1 blue-grey lighten-2 "
             }
           >
             <div className="card-content white-text">
               <div>
-                {props.task.isDone === false && (
+                {!props.task.isDone && (
                   <span className={"right green-text"} onClick={handleIsDone}>
                     <IsDoneTask isDone={props.task.isDone} />
                   </span>
                 )}
 
-                <div className="card-title">
-                  <h4>{props.task.title}</h4>{" "}
-                  {props.task.isDone === true && (
-                    <span
-                      className={"centar green-text"}
-                      onClick={handleIsDone}
-                    >
+                <div className="card-title center">
+                  {props.task.isDone && (
+                    <span className="btnDonStyle" onClick={handleIsDone}>
                       <IsDoneTask isDone={props.task.isDone} />
                     </span>
                   )}
+                  <h4>{props.task.title}</h4>
                   <h5>{props.task.description}</h5>
                 </div>
               </div>
@@ -79,7 +71,7 @@ const Card = (props) => {
                   <li className="left">
                     <button
                       className={
-                        (props.task.isDone === false &&
+                        (!props.task.isDone &&
                           "waves-effect waves-light btn") ||
                         "waves-effect waves-light btn disabled"
                       }
@@ -88,13 +80,13 @@ const Card = (props) => {
                       Edit
                     </button>
                   </li>
-                  <li className="right">
-                    <button
-                      className="waves-effect waves-light btn"
+                  <li className="btnDelStyle">
+                    <i
                       onClick={() => setShowModalDelete(!showModalDelete)}
+                      className=" material-icons flat medium red-text darken-3"
                     >
-                      Delete
-                    </button>
+                      delete
+                    </i>
                   </li>
                 </ul>
               </div>

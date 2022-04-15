@@ -1,14 +1,12 @@
-import "./App.css";
-
 import Navbar from "./Navbar";
-import TaskDiler from "./TaskDiler";
+import TaskDealer from "./TaskDealer";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Navbar />
       <ul>
-        <TaskDiler />
+        <TaskDealer />
       </ul>
     </div>
   );

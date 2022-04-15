@@ -4,38 +4,23 @@ import AddTask from "./AddTask";
 
 import CardsMap from "./CardsMap";
 
-export default class TaskDiler extends Component {
+export default class TaskDealer extends Component {
   state = {
-    tasks: [
-      // {
-      //   _id: 1,
-      //   title: "",
-      //   description: "",
-      //   isDone: false,
-      // },
-   
-    ],
+    tasks: [],
   };
 
   componentDidMount() {
     axios.post("/api/tasks", {}).then((r) => {
-      // console.log("response from axios", r);
+      console.log("response from axios", r);
       this.setState({ tasks: r.data.tasks });
     });
   }
 
   addTasks = ({ title, description, isDone }) => {
-    axios
-      .post("/api/task/add", { title, description, isDone })
-      .then((r) => {
-        console.log("response from axios add", r);
-      })
-      .then((r) => {
-        axios.post("/api/tasks", {}).then((r) => {
-          console.log("response from axios", r);
-          this.setState({ tasks: r.data.tasks });
-        });
-      });
+    axios.post("/api/task/add", { title, description, isDone }).then((r) => {
+      console.log("response from axios add", r);
+      this.setState({ tasks: [r.data.task, ...this.state.tasks] });
+    });
   };
 
   editTask = ({ id, title, description, isDone }) => {
@@ -78,8 +63,8 @@ export default class TaskDiler extends Component {
       })
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
-          console.log("response from axios", r);
-          this.setState({ task: r.data.tasks });
+          console.log("response from axios Delete: ", r);
+          this.setState({ tasks: r.data.tasks });
         });
       });
   };

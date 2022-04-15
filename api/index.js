@@ -6,7 +6,6 @@ mongoose
   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDb...", err));
-// var Schema = mongoose.Schema;
 
 const taskSchema = new mongoose.Schema({
   title: String,
@@ -31,28 +30,21 @@ async function createTask({ title, description, isDone }) {
 }
 
 async function getTasks() {
-  const tasks = await Task.find();
-  console.log("odgovor od tasks \n\n\n\n", tasks);
+  const tasks = await Task.find().sort({ date: -1 });
+
   return tasks;
 }
 
 async function editTask({ id, title, description, isDone }) {
   const task = await Task.findById(id);
-
   if (!task) return;
-  // task.title = title;
-  // task.description = description;
-  // task.isDone = isDone;
   task.set({ title, description, isDone });
-  console.log("ovoj je muka", title, description, isDone);
   const result = await task.save();
-  console.log("rezultatiiiii", result);
 }
 
 async function isDoneTask({ id, isDone }) {
   const task = await Task.findById(id);
   if (!task) return;
-  // task.isDone = isDone;
   task.set({ isDone });
   const result = await task.save();
   console.log(result);
@@ -60,7 +52,6 @@ async function isDoneTask({ id, isDone }) {
 
 async function deleteTask(id) {
   const result = await Task.deleteOne({ _id: id });
-  console.log("ovoj je rezultat", result);
 }
 
 const app = express();
@@ -97,7 +88,7 @@ app.post("/task/edit", (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const isDone = req.body.isDone;
-  console.log("recived params Edit", title, description, isDone);
+
   editTask({ id, title, description, isDone }).then((r) => {
     res.send({ status: "success", task: r });
   });

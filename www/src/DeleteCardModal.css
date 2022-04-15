@@ -1,16 +1,15 @@
-.deleteCardModal{
-    position: absolute;
-    float: left;
+.deleteCardModal {
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
-    background: white;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    padding: 3rem;
-    border-radius: .3rem;
-    box-shadow: 5px 5px 15px 5px #8d2121b2;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  padding: 3rem;
+  border-radius: 0.3rem;
+  box-shadow: 5px 5px 15px 5px #8d2121b2;
 }

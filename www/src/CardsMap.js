@@ -3,7 +3,7 @@ import Card from "./Card";
 
 export default class CardsMap extends Component {
   renderTags() {
-    if (this.props.tasks.length === 0) return <p>There are no TODO tasks!</p>;
+    if (this.props.tasks.length === 0) return <p className="center">There are no TODO tasks!</p>;
     return (
       <ul>
         {this.props.tasks.map((task) => (
@@ -24,7 +24,7 @@ export default class CardsMap extends Component {
   render() {
     return (
       <div>
-        {this.props.tasks.length === 0 && "Please create a new TODO task"}
+        {this.props.tasks.length === 0 && <h4 className="center">Please create a new TODO task.</h4>}
         {this.renderTags()}
       </div>
     );

@@ -8,17 +8,17 @@ export default class Navbar extends Component {
           <div className="nav-wrapper">
             <a 
             // href="#" 
-            className="brand-logo">
+            className="brand-logo center">
               Todo
             </a>
             <ul>
-              <li className="left">
+              {/* <li className="left">
                 <a 
-                // href="#" 
+                 href="#" 
                 className="waves-effect waves-light btn">
-                  Histori
+                  History
                 </a>
-              </li>
+              </li> */}
               <li className="right">
                 <button
                   data-target="modal_box"

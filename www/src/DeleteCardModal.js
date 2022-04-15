@@ -2,6 +2,13 @@ import React from "react";
 import "./DeleteCardModal.css";
 
 const DeleteCardModal = (props) => {
+  const id={id:props.task._id}
+function onDelete(){props.deleteTask(id)}
+function onConfirmDelete(){props.setShowModalDelete(!props.showModalDelete)}
+ const handleDelete= ()=>{
+     onDelete();
+     onConfirmDelete()
+ }
   return (
     <div>
       <div className="deleteCardModal">
@@ -23,7 +30,7 @@ const DeleteCardModal = (props) => {
             <li className="right">
               <button
                 className=" waves-effect waves-green btn-flat "
-                onClick={() => props.deleteTask({id:props.task._id})}
+                onClick={handleDelete}
               >
                 Yes
               </button>

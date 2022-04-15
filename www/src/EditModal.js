@@ -4,25 +4,35 @@ import "./EditModal.css";
 const EditModal = (props) => {
   let [title, setTitle] = useState(props.task.title);
   let [description, setDescription] = useState(props.task.description);
-  const [id] = useState(props.task._id);
+  const id = props.task._id;
 
+  function closeModal() {
+    props.setShowModalEdit(!props.showModalEdit);
+  }
+  const handleClose = (e) => {
+    e.preventDefault();
+    closeModal();
+  };
   const handleEdit = (e) => {
-    let setEditState = {
+    let editState = {
       id,
       title,
       description,
       isDone: props.task.isDone,
     };
     e.preventDefault();
-    console.log("bifore send", setEditState);
-    props.editTask(setEditState);
+    console.log("bifore send", editState);
+    if (props.task.title === title && props.task.description === description) {
+      return;
+    }
+    props.editTask(editState);
+    closeModal();
   };
   return (
     <div className="editModal">
-      Modal text
+      Edit
       <form className="col s12">
         <div className="input-field col s12">
-          <div>{id}</div>
           <input value={title} onChange={(e) => setTitle(e.target.value)} />
           <input
             value={description}
@@ -30,14 +40,18 @@ const EditModal = (props) => {
           />
         </div>
         <div className="modal-footer">
-          <button className="waves-green btn-flat right" onClick={handleEdit}>
+          <button
+            className="waves-green btn-flat right"
+            onClick={handleEdit}
+            disabled={
+              props.task.title === title &&
+              props.task.description === description
+            }
+          >
             Edit
           </button>
 
-          <button
-            className="waves-red btn-flat left"
-            onClick={() => props.setShowModalEdit(!props.showModalEdit)}
-          >
+          <button className="waves-red btn-flat left" onClick={handleClose}>
             Cancel
           </button>
         </div>

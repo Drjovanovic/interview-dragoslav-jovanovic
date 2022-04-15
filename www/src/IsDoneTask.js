@@ -2,15 +2,21 @@ import React, { useState } from "react";
 
 const IsDoneTask = (props) => {
   const [showDone, setIsDone] = useState(props.isDone);
-console.log("In isDoneTask isDone have value: ",showDone);
+
   return (
     <div className="row">
       {(showDone && (
-        <i className="material-icons large " onClick={() => setIsDone(!showDone)}>
+        <i
+          className="material-icons large  green-text"
+          onClick={() => setIsDone(!showDone)}
+        >
           done
         </i>
       )) || (
-        <button className="btn" onClick={() => setIsDone(!showDone)}>
+        <button
+          className="btn waves-effect"
+          onClick={() => setIsDone(!showDone)}
+        >
           Done
         </button>
       )}
