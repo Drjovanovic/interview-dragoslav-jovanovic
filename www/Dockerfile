@@ -1,4 +1,5 @@
 FROM node:alpine
+USER node
 WORKDIR /app
 
 COPY --chown=node:node package.json .
