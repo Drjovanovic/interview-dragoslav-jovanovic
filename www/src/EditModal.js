@@ -21,7 +21,7 @@ const EditModal = (props) => {
       isDone: props.task.isDone,
     };
     e.preventDefault();
-   
+
     if (props.task.title === title && props.task.description === description) {
       return;
     }
@@ -30,10 +30,10 @@ const EditModal = (props) => {
   };
   return (
     <div className="editModal">
-      Edit
+      <h3 className="green-text pulse">Edit</h3>
       <form className="col s12">
-        <div className="input-field col s12">
-          <input value={title} onChange={(e) => setTitle(e.target.value)} />
+        <div className="input-field col s12 " >
+          <input  value={title} onChange={(e) => setTitle(e.target.value)} />
           <input
             value={description}
             onChange={(e) => setDescription(e.target.value)}

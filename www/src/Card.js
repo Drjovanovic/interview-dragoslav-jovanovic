@@ -61,8 +61,8 @@ const Card = (props) => {
                   </span>
                 )}
                 <div className="card-title center">
-                  <h4>{props.task.title}</h4>
-                  <h5>{props.task.description}</h5>
+                  <h4 className="flow-text">{props.task.title}</h4>
+                  <h5 className="flow-text">{props.task.description}</h5>
                 </div>
               </div>
             </div>
