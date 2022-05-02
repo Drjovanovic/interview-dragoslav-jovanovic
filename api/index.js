@@ -57,80 +57,85 @@
 const express = require('express'); 
 const bodyParser = require('body-parser');
 const path = require("path");
-const NodeCouchDb = require('node-couchdb');
+// const NodeCouchDb = require('node-couchdb');
+
 //  const couch = new NodeCouchDb();
+
+
+
 // const couch = new NodeCouchdb({  
 //   auth:{  
 //   user: 'admin' , 
-//   password: 'YOURPASSWORD'  
+//   password: 'password'  
 //   }  
 //   });  
 
-couch.listDatabases().then(function(dbs){  
-console.log(dbs);  
-}); 
- 
+// couch.listDatabases().then(function(dbs){  
+// console.log(dbs);  
+// }); 
+// const dbname = 'tasks'
+// // const viewUrl = 
 const app = express();
 const port = 3001;
-app.set('view engine', 'ejs');  
-app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');  
+// app.set('views', path.join(__dirname, 'views'));
 
-app.use (bodyParser.json()); 
-app.use(bodyParser.urlencoded({extended: false}));
- 
-//  app.use(express.json());
-//  app.use(express.urlencoded({ extended: true }));
+// app.use(bodyParser.json()); 
+// app.use(bodyParser.urlencoded({extended: false}));
+  
+ app.use(express.json());
+ app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res)=> {
   res.send("Hi There 123");
 });
 
-// app.post("/task/add", (req, res) => {
-//   const title = req.body.title || "";
-//   const description = req.body.description || "";
-//   const isDone = req.body.isDone || false;
+app.post("/task/add", (req, res) => {
+  const title = req.body.title || "";
+  const description = req.body.description || "";
+  const isDone = req.body.isDone || false;
 
-//   console.log("recived params", title, description, isDone);
-//   console.log("req", req);
-//   const result = {};
-//   createTask({ title, description, isDone }).then((r) => {
-//     res.send({ status: "success", task: r });
-//   });
-// });
+  console.log("recived params", title, description, isDone);
+  console.log("req", req);
+  const result = {};
+  // createTask({ title, description, isDone }).then((r) => {
+  //   res.send({ status: "success", task: r });
+  // });
+});
 
-// app.post("/tasks", (req, res) => {
-//   const result = {};
-//   getTasks().then((r) => {
-//     res.send({ status: "success", tasks: r });
-//   });
-// });
+app.post("/tasks", (req, res) => {
+  const result = {};
+  // getTasks().then((r) => {
+  //   res.send({ status: "success", tasks: r });
+  // });
+});
 
-// app.post("/task/edit", (req, res) => {
-//   const id = req.body.id;
-//   const title = req.body.title;
-//   const description = req.body.description;
-//   const isDone = req.body.isDone;
+app.post("/task/edit", (req, res) => {
+  const id = req.body.id;
+  const title = req.body.title;
+  const description = req.body.description;
+  const isDone = req.body.isDone;
 
 //   editTask({ id, title, description, isDone }).then((r) => {
 //     res.send({ status: "success", task: r });
 //   });
-// });
+ });
 
-// app.post("/task/isdone", (req, res) => {
-//   const id = req.body.id;
-//   const isDone = req.body.isDone;
+app.post("/task/isdone", (req, res) => {
+  const id = req.body.id;
+  const isDone = req.body.isDone;
 
 //   isDoneTask({ id, isDone }).then((r) => {
 //     res.send({ status: "success", task: r });
 //   });
-// });
+ });
 
-// app.post("/task/delete", (req, res) => {
-//   const id = req.body.id;
+app.post("/task/delete", (req, res) => {
+  const id = req.body.id;
 //   deleteTask(id).then((r) => {
 //     res.send({ status: "success", task: r });
 //   });
-// });
+ });
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
