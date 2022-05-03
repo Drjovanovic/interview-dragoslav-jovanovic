@@ -14,7 +14,6 @@
 //   date: { type: Date, default: Date.now },
 // });
 
-
 // const Task = mongoose.model("Task", taskSchema);
 
 // async function createTask({ title, description, isDone }) {
@@ -54,39 +53,85 @@
 // async function deleteTask(id) {
 //   const result = await Task.deleteOne({ _id: id });
 // }
-const express = require('express'); 
-const bodyParser = require('body-parser');
-const path = require("path");
+
+// const bodyParser = require('body-parser');
+// const path = require("path");
 // const NodeCouchDb = require('node-couchdb');
 
 //  const couch = new NodeCouchDb();
 
+// const couch = new NodeCouchdb({
+//   auth:{
+//   user: 'admin' ,
+//   password: 'password'
+//   }
+//   });
 
-
-// const couch = new NodeCouchdb({  
-//   auth:{  
-//   user: 'admin' , 
-//   password: 'password'  
-//   }  
-//   });  
-
-// couch.listDatabases().then(function(dbs){  
-// console.log(dbs);  
-// }); 
+// couch.listDatabases().then(function(dbs){
+// console.log(dbs);
+// });
 // const dbname = 'tasks'
-// // const viewUrl = 
-const app = express();
-const port = 3001;
-// app.set('view engine', 'ejs');  
+// // const viewUrl =
+
+// app.set('view engine', 'ejs');
 // app.set('views', path.join(__dirname, 'views'));
 
-// app.use(bodyParser.json()); 
+// app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({extended: false}));
-  
- app.use(express.json());
- app.use(express.urlencoded({ extended: true }));
+const express = require("express");
+//create database
+const http = require("http");
+const clientTask = http.createClient(5984, "127.0.0.1");
+const request = clientTask.request("PUT", "/tasks");
+request.end();
+request.on("response", (res) => {
+  if (res.statusCode == 201) {
+    console.log("DB Created");
+  } else {
+    console.log("DB failed to Create");
+  }
+});
 
-app.get("/", (req, res)=> {
+const dbhost = "127.0.0.1";
+const dbPort = 5984;
+const dbName = "tasks";
+const couchdb = require("felix-couchdb");
+const client = couchdb.createClient(dbPort, dbhost);
+
+const db = client.db(dbName);
+
+//create document
+const title = {title:'nesto'};
+db.saveDoc("2609", title, (err, doc) => {
+  if (err) {
+    console.log(JSON.stringify(err));
+  } else {
+    console.log("Task Created");
+  }
+});
+//read cocument
+db.getDoc("2609", (err, doc) => {
+  console.log(doc);
+});
+//update document
+db.getDoc("2069", (err, doc) => {
+  doc.title = "";
+  doc.description = "";
+  doc.isDone=true
+  db.saveDoc("2609", doc);
+
+  db.getDoc("2609", (err, revisedUser) => {
+    console.log(revisedUser);
+  });
+});
+
+const app = express();
+const port = 3001;
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.get("/", (req, res) => {
   res.send("Hi There 123");
 });
 
@@ -116,26 +161,26 @@ app.post("/task/edit", (req, res) => {
   const description = req.body.description;
   const isDone = req.body.isDone;
 
-//   editTask({ id, title, description, isDone }).then((r) => {
-//     res.send({ status: "success", task: r });
-//   });
- });
+  //   editTask({ id, title, description, isDone }).then((r) => {
+  //     res.send({ status: "success", task: r });
+  //   });
+});
 
 app.post("/task/isdone", (req, res) => {
   const id = req.body.id;
   const isDone = req.body.isDone;
 
-//   isDoneTask({ id, isDone }).then((r) => {
-//     res.send({ status: "success", task: r });
-//   });
- });
+  //   isDoneTask({ id, isDone }).then((r) => {
+  //     res.send({ status: "success", task: r });
+  //   });
+});
 
 app.post("/task/delete", (req, res) => {
   const id = req.body.id;
-//   deleteTask(id).then((r) => {
-//     res.send({ status: "success", task: r });
-//   });
- });
+  //   deleteTask(id).then((r) => {
+  //     res.send({ status: "success", task: r });
+  //   });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
