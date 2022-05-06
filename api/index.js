@@ -167,16 +167,12 @@
 
 // // Retrieving Documents
 //
+
+const { default: axios } = require("axios");
 const express = require("express");
- import axios from "axios";
-function getTask() {
-  axios({
-    method: "get",
-    url: "http://admin:password@localhost:5984/tasks/_all_docs",
-  })
-    .then((res) => console.log(res))
-    .catch((err) => console.error(err));
-}
+
+
+
 const app = express();
 const port = 3001;
 
