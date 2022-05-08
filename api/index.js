@@ -196,11 +196,11 @@ async function createTask({ title, description, isDone }) {
   res.send(result);
 }
 
-async function getTasks() {
+const getTasks =async()=> {
   const tasks = await axios.get(
-    "http://admin:password@localhost:8080/db/tasks/_all_docs?include_docs=true"
-  );
-// const tasks = "bilo koji string"
+    "http://admin:password@couchserver:5984/tasks/_all_docs"
+  )
+//  const tasks = "bilo koji string"
   return tasks;
 }
 
@@ -251,9 +251,11 @@ app.post("/task/add", (req, res) => {
 
 app.get("/tasks", (req, res) => {
   // const result = {};
-  getTasks().then((r) => {
-    res.send({ status: "success", tasks: r });
-  }).catch((r)=>console.log("bad response", r))
+  getTasks()
+  .then((r) => {
+    // console.log("\n\n\n Odgovor \n\n\n", r.data)
+    res.send({ status: "success", tasks: r.data });
+  })
 });
 
 app.post("/task/edit", (req, res) => {
