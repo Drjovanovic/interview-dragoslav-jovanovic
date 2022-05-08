@@ -167,9 +167,62 @@
 
 // // Retrieving Documents
 //
+import express from "express";
+import axios from "axios";
+// mongoose
+//   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(() => console.log("Connected to MongoDB"))
+//   .catch((err) => console.error("Could not connect to MongoDb...", err));
 
-const { default: axios } = require("axios");
-const express = require("express");
+// const taskSchema = new mongoose.Schema({
+//   title: String,
+//   description: String,
+//   isDone: Boolean,
+//   date: { type: Date, default: Date.now },
+// });
+
+// const Task = mongoose.model("Task", taskSchema);
+
+async function createTask({ title, description, isDone }) {
+  const task = new Task({
+    title,
+    description,
+    isDone,
+  });
+
+  const result = await task.save();
+  console.log(result);
+  return result;
+  res.send(result);
+}
+
+async function getTasks() {
+  const tasks = await axios.get(
+    "http://admin:password@localhost:8080/db/tasks/_all_docs?include_docs=true"
+  );
+// const tasks = "bilo koji string"
+  return tasks;
+}
+
+async function editTask({ id, title, description, isDone }) {
+  const task = await Task.findById(id);
+  if (!task) return;
+  task.set({ title, description, isDone });
+  const result = await task.save();
+}
+
+async function isDoneTask({ id, isDone }) {
+  const task = await Task.findById(id);
+  if (!task) return;
+  task.set({ isDone });
+  const result = await task.save();
+  console.log(result);
+}
+
+async function deleteTask(id) {
+  const result = await Task.deleteOne({ _id: id });
+}
+
 
 
 
@@ -180,7 +233,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.send("1234");
+  res.send("77777");
 });
 
 app.post("/task/add", (req, res) => {
@@ -198,9 +251,9 @@ app.post("/task/add", (req, res) => {
 
 app.get("/tasks", (req, res) => {
   // const result = {};
-  // getTasks().then((r) => {
-  //   res.send({ status: "success", tasks: r });
-  // });
+  getTasks().then((r) => {
+    res.send({ status: "success", tasks: r });
+  }).catch((r)=>console.log("bad response", r))
 });
 
 app.post("/task/edit", (req, res) => {
