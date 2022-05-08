@@ -167,8 +167,7 @@
 
 // // Retrieving Documents
 //
-import express from "express";
-import axios from "axios";
+
 // mongoose
 //   .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
 //   .then(() => console.log("Connected to MongoDB"))
@@ -182,26 +181,34 @@ import axios from "axios";
 // });
 
 // const Task = mongoose.model("Task", taskSchema);
+// const task= {title,description,isDone}
+// const createTask =async()=>{
+// const task = await axios.post()
+// }
+// async function createTask({ title, description, isDone }) {
+//   const task = new Task({
+//     title,
+//     description,
+//     isDone,
+//   });
 
-async function createTask({ title, description, isDone }) {
-  const task = new Task({
-    title,
-    description,
-    isDone,
-  });
+//   const result = await task.save();
+//   console.log(result);
+//   return result;
+//   res.send(result);
+// }
+import express from "express";
+import axios from "axios";
 
-  const result = await task.save();
-  console.log(result);
-  return result;
-  res.send(result);
-}
+
 
 const getTasks =async()=> {
   const tasks = await axios.get(
-    "http://admin:password@couchserver:5984/tasks/_all_docs"
+    "http://admin:password@couchserver:5984/tasks/_all_docs?include_docs=true"
   )
-//  const tasks = "bilo koji string"
-  return tasks;
+//  const tasks = "Test string"
+  const cleanTasks = tasks.data.rows.map(n => n.doc)
+  return cleanTasks;
 }
 
 async function editTask({ id, title, description, isDone }) {
@@ -249,12 +256,12 @@ app.post("/task/add", (req, res) => {
   // });
 });
 
-app.get("/tasks", (req, res) => {
+app.post("/tasks", (req, res) => {
   // const result = {};
   getTasks()
   .then((r) => {
     // console.log("\n\n\n Odgovor \n\n\n", r.data)
-    res.send({ status: "success", tasks: r.data });
+    res.send({ status: "success", tasks: r });
   })
 });
 

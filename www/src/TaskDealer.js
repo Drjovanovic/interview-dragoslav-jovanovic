@@ -11,7 +11,7 @@ export default class TaskDealer extends Component {
 
   componentDidMount() {
     axios.post("/api/tasks", {}).then((r) => {
-     
+     console.log("data", r);
       this.setState({ tasks: r.data.tasks });
     });
   }
