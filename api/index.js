@@ -200,16 +200,25 @@
 import express from "express";
 import axios from "axios";
 
-
-
-const getTasks =async()=> {
+// const getUuid = async()=>{
+//   const uid= await axios.get("http://admin:password@couchserver:5984/_uuids")
+//   // return uid;
+// }
+const createTask = async ({ title, description, isDone }) => {
+  const task = await axios.post(
+    "http://admin:password@couchserver:5984/tasks/",
+    { title, description, isDone }
+  )
+ 
+};
+const getTasks = async () => {
   const tasks = await axios.get(
     "http://admin:password@couchserver:5984/tasks/_all_docs?include_docs=true"
-  )
-//  const tasks = "Test string"
-  const cleanTasks = tasks.data.rows.map(n => n.doc)
+  );
+  //  const tasks = "Test string"
+  const cleanTasks = tasks.data.rows.map((n) => n.doc);
   return cleanTasks;
-}
+};
 
 async function editTask({ id, title, description, isDone }) {
   const task = await Task.findById(id);
@@ -230,9 +239,6 @@ async function deleteTask(id) {
   const result = await Task.deleteOne({ _id: id });
 }
 
-
-
-
 const app = express();
 const port = 3001;
 
@@ -250,19 +256,18 @@ app.post("/task/add", (req, res) => {
 
   console.log("recived params", title, description, isDone);
   console.log("req", req);
-  const result = {};
-  // createTask({ title, description, isDone }).then((r) => {
-  //   res.send({ status: "success", task: r });
-  // });
+  // const result = {};
+  createTask({ title, description, isDone }).then((r) => {
+    res.send({ status: "success", task: r });
+  });
 });
 
 app.post("/tasks", (req, res) => {
   // const result = {};
-  getTasks()
-  .then((r) => {
+  getTasks().then((r) => {
     // console.log("\n\n\n Odgovor \n\n\n", r.data)
     res.send({ status: "success", tasks: r });
-  })
+  });
 });
 
 app.post("/task/edit", (req, res) => {
