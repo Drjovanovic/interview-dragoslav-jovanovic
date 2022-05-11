@@ -15,28 +15,17 @@ const getTasks = async () => {
   const tasks = await axios.get(
     "http://admin:password@couchserver:5984/tasks/_all_docs?include_docs=true"
   );
-  //  const tasks = "Test string"
   const cleanTasks = tasks.data.rows.map((n) => n.doc);
   return cleanTasks;
 };
 const editTask = async ({ id, rev, title, description, isDone }) => {
-  console.log("vrednost",id,);
-  // const task = await axios.put(
-  //   "http://admin:password@couchserver:5984/tasks/",id,
-  //   { id,rev, title, description, isDone }
-  // );
+  const editReq = `http://admin:password@couchserver:5984/tasks/${id}/?rev=${rev}`;
+  const task = await axios.put(editReq, { title, description, isDone });
 };
-const deleteTask = async ({id,rev}) => {
- 
- const deleteReq = `http://admin:password@couchserver:5984/tasks/${id}/?rev=${rev}`
+const deleteTask = async ({ id, rev }) => {
+  const deleteReq = `http://admin:password@couchserver:5984/tasks/${id}/?rev=${rev}`;
   const task = await axios.delete(deleteReq);
 };
-// async function editTask({ id, title, description, isDone }) {
-//   const task = await Task.findById(id);
-//   if (!task) return;
-//   task.set({ title, description, isDone });
-//   const result = await task.save();
-// }
 
 // async function isDoneTask({ id, isDone }) {
 //   const task = await Task.findById(id);
@@ -45,7 +34,6 @@ const deleteTask = async ({id,rev}) => {
 //   const result = await task.save();
 //   console.log(result);
 // }
-
 
 const app = express();
 const port = 3001;
@@ -64,30 +52,27 @@ app.post("/task/add", (req, res) => {
 
   console.log("recived params", title, description, isDone);
   console.log("req", req);
-  // const result = {};
+
   createTask({ title, description, isDone }).then((r) => {
     res.send({ status: "success", task: r });
   });
 });
 
 app.post("/tasks", (req, res) => {
-  // const result = {};
   getTasks().then((r) => {
-    // console.log("\n\n\n Odgovor \n\n\n", r.data)
     res.send({ status: "success", tasks: r });
   });
 });
 
 app.post("/task/edit", (req, res) => {
   const id = req.body.id;
-  const rev=req.bodi.rev
+  const rev = req.body.rev;
   const title = req.body.title;
   const description = req.body.description;
   const isDone = req.body.isDone;
-
-    editTask({ id,rev, title, description, isDone }).then((r) => {
-      res.send({ status: "success", task: r });
-    });
+  editTask({ id, rev, title, description, isDone }).then((r) => {
+    res.send({ status: "success", task: r });
+  });
 });
 
 app.post("/task/isdone", (req, res) => {
@@ -102,9 +87,9 @@ app.post("/task/isdone", (req, res) => {
 app.post("/task/delete", (req, res) => {
   const id = req.body.id.id;
   const rev = req.body.rev.rev;
-    deleteTask({id,rev}).then((r) => {
-      res.send({ status: "success", task: r });
-    });
+  deleteTask({ id, rev }).then((r) => {
+    res.send({ status: "success", task: r });
+  });
 });
 
 app.listen(port, () => {
