@@ -33,9 +33,9 @@ export default class TaskDealer extends Component {
         });
       });
   };
-  isDoneTask = ({ id, rev, isDone }) => {
+  isDoneTask = ({ id, rev, title, description, isDone }) => {
     axios
-      .post("/api/task/isdone", { id, rev, isDone })
+      .post("/api/task/isdone", { id, rev, title, description, isDone })
 
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {

@@ -6,19 +6,8 @@ export default class Navbar extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper">
-            <a 
-            // href="#" 
-            className="brand-logo center">
-              Todo
-            </a>
+            <a className="brand-logo center">Todo</a>
             <ul>
-              {/* <li className="left">
-                <a 
-                 href="#" 
-                className="waves-effect waves-light btn">
-                  History
-                </a>
-              </li> */}
               <li className="right">
                 <button
                   data-target="modal_box"

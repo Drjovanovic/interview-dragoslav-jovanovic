@@ -14,6 +14,9 @@ const Card = (props) => {
 
     let don = {
       id: props.task._id,
+      rev: props.task._rev,
+      title:props.task.title,
+      description:props.task.description,
       isDone: !props.task.isDone,
     };
     props.isDoneTask(don);
