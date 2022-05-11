@@ -5,6 +5,7 @@ const EditModal = (props) => {
   let [title, setTitle] = useState(props.task.title);
   let [description, setDescription] = useState(props.task.description);
   const id = props.task._id;
+  const rev= props.task._rev
 
   function closeModal() {
     props.setShowModalEdit(!props.showModalEdit);
@@ -16,6 +17,7 @@ const EditModal = (props) => {
   const handleEdit = (e) => {
     let editState = {
       id,
+      rev,
       title,
       description,
       isDone: props.task.isDone,

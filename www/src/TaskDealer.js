@@ -22,10 +22,10 @@ export default class TaskDealer extends Component {
     });
   };
 
-  editTask = ({ id, title, description, isDone }) => {
+  editTask = ({ id, rev, title, description, isDone }) => {
     axios
 
-      .post("/api/task/edit", { id, title, description, isDone })
+      .post("/api/task/edit", { id, rev, title, description, isDone })
 
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
@@ -33,9 +33,9 @@ export default class TaskDealer extends Component {
         });
       });
   };
-  isDoneTask = ({ id, isDone }) => {
+  isDoneTask = ({ id, rev, isDone }) => {
     axios
-      .post("/api/task/isdone", { id, isDone })
+      .post("/api/task/isdone", { id, rev, isDone })
 
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
@@ -44,9 +44,9 @@ export default class TaskDealer extends Component {
       });
   };
 
-  deleteTask = ({ id }) => {
+  deleteTask = ({ id ,rev}) => {
     axios
-      .post("/api/task/delete", { id })
+      .post("/api/task/delete", { id ,rev})
 
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {

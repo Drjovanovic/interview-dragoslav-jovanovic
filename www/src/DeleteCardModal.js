@@ -3,7 +3,8 @@ import "./DeleteCardModal.css";
 
 const DeleteCardModal = (props) => {
   const id={id:props.task._id}
-function onDelete(){props.deleteTask(id)}
+  const rev={rev:props.task._rev}
+function onDelete(){props.deleteTask({id,rev})}
 function onConfirmDelete(){props.setShowModalDelete(!props.showModalDelete)}
  const handleDelete= ()=>{
      onDelete();
