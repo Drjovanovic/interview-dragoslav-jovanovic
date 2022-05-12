@@ -5,6 +5,13 @@ import axios from "axios";
 //   const uid= await axios.get("http://admin:password@couchserver:5984/_uuids")
 //   // return uid;
 // }
+
+const createTask = async ({ title, description, isDone }) => {
+  const task = await axios.post(
+    "http://admin:password@couchserver:5984/tasks/",
+    { title, description, isDone }
+  );
+};
 const getTasks = async () => {
   const tasks = await axios.get(
     "http://admin:password@couchserver:5984/tasks/_all_docs?include_docs=true"
@@ -12,13 +19,6 @@ const getTasks = async () => {
   const cleanTasks = tasks.data.rows.map((n) => n.doc);
   return cleanTasks;
 };
-const createTask = async ({ title, description, isDone }) => {
-  const task = await axios.post(
-    "http://admin:password@couchserver:5984/tasks/",
-    { title, description, isDone }
-  );
-};
-
 const editTask = async ({ id, rev, title, description, isDone }) => {
   const editReq = `http://admin:password@couchserver:5984/tasks/${id}/?rev=${rev}`;
   const task = await axios.put(editReq, {
