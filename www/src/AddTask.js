@@ -9,7 +9,7 @@ export default class AddTask extends Component {
         let elems = document.querySelectorAll(".modal");
         let instances = M.Modal.init(elems, {});
       },
-      // { passive: true }
+      { passive: true }
     );
   }
 

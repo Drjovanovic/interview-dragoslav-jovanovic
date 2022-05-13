@@ -6,7 +6,7 @@ const EditModal = (props) => {
   let [description, setDescription] = useState(props.task.description);
   const id = props.task._id;
   const rev= props.task._rev
-
+  const date=props.task.date
   function closeModal() {
     props.setShowModalEdit(!props.showModalEdit);
   }
@@ -21,6 +21,7 @@ const EditModal = (props) => {
       title,
       description,
       isDone: props.task.isDone,
+      date
     };
     e.preventDefault();
 

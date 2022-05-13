@@ -26,9 +26,9 @@ export default class TaskDealer extends Component {
 
   };
 
-  editTask = ({ id, rev, title, description, isDone }) => {
+  editTask = ({ id, rev, title, description, isDone ,date}) => {
     axios
-      .post("/api/task/edit", { id, rev, title, description, isDone })
+      .post("/api/task/edit", { id, rev, title, description, isDone ,date})
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
           this.setState({ tasks: r.data.tasks });
@@ -36,9 +36,9 @@ export default class TaskDealer extends Component {
       });
   };
 
-  isDoneTask = ({ id, rev, title, description, isDone }) => {
+  isDoneTask = ({ id, rev, title, description, isDone, date}) => {
     axios
-      .post("/api/task/isdone", { id, rev, title, description, isDone })
+      .post("/api/task/isdone", { id, rev, title, description, isDone, date })
       .then((r) => {
         axios.post("/api/tasks", {}).then((r) => {
           this.setState({ tasks: r.data.tasks });

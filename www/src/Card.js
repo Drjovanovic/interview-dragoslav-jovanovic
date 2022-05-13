@@ -18,6 +18,7 @@ const Card = (props) => {
       title:props.task.title,
       description:props.task.description,
       isDone: !props.task.isDone,
+      date: props.task.date
     };
     props.isDoneTask(don);
   };

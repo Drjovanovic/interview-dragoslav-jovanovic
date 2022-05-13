@@ -9,7 +9,6 @@ services:
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=password
-      # - COUCHDB_NODENAME=couchdb@127.0.0.1
     volumes:
         - ./dbdata:/opt/couchdb/data
 
